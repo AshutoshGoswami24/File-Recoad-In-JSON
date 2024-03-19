@@ -1,18 +1,18 @@
 window.onload = function() {
     loadRecordsFromCookies();
-  };
+};
 
-  function addRecord() {
+function addRecord() {
     var filename = document.getElementById("filename").value.trim();
     var fileformat = document.getElementById("fileformat").value;
     var url = document.getElementById("url").value.trim();
 
     if (filename === "" || url === "") {
-      alert("Please fill in all fields.");
-      return;
+        alert("Please fill in all fields.");
+        return;
     }
 
-    var record = "" + filename + " - Free Download By @PandaWep in Telegram" + fileformat + "";
+    var record = filename + " - Free Download By @PandaWep in Telegram" + fileformat;
     var recordWithUrl = url;
 
     var table = document.getElementById("records").getElementsByTagName('tbody')[0];
@@ -28,37 +28,50 @@ window.onload = function() {
     cell1.textContent = table.rows.length - 1;
     cell2.innerHTML = record;
     cell3.innerHTML = recordWithUrl;
-    cell4.innerHTML = "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 1)'>Copy FILE NAME</button>" +
-                      "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 2)'>Copy URL</button>" +
-                      "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
-                      "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
+    cell4.innerHTML = "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 2)'>Copy FILE NAME</button>" +
+        "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 3)'>Copy URL</button>" +
+        "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
+        "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
 
     document.getElementById("filename").value = ""; // Clear Filename input
     document.getElementById("url").value = ""; // Clear URL input
     saveRecordsToCookies();
-  }
+}
 
-  function copyLine(row, lineIndex) {
-    var lineText = row.cells[lineIndex].textContent.trim();
-    navigator.clipboard.writeText(lineText).then(function() {
-      alert("Line " + lineIndex + " copied to clipboard!");
+// Function to copy the file name
+function copyFileName(row) {
+    var fileName = row.cells[2].textContent.trim();
+    navigator.clipboard.writeText(fileName).then(function() {
+        alert("File name copied to clipboard!");
     }, function() {
-      alert("Failed to copy line to clipboard.");
+        alert("Failed to copy file name to clipboard.");
     });
-  }
+}
 
-  function deleteRow(row) {
+// Function to copy the URL
+function copyFileUrl(row) {
+    var fileUrl = row.cells[3].textContent.trim();
+    navigator.clipboard.writeText(fileUrl).then(function() {
+        alert("File URL copied to clipboard!");
+    }, function() {
+        alert("Failed to copy file URL to clipboard.");
+    });
+}
+
+
+function deleteRow(row) {
     row.parentNode.removeChild(row);
     updateRowNumbers();
     saveRecordsToCookies();
-  }
+}
 
-  function updateRowNumbers() {
+function updateRowNumbers() {
     var table = document.getElementById("records");
     for (var i = 1; i < table.rows.length; i++) {
-      table.rows[i].cells[1].textContent = i;
+        table.rows[i].cells[1].textContent = i;
     }
-  }
+}
+
 
   function downloadTable() {
     var table = document.getElementById("records");
@@ -108,10 +121,10 @@ window.onload = function() {
     cell1.textContent = table.rows.length - 1;
     cell2.textContent = record["FILE NAME"];
     cell3.textContent = record["URL"];
-    cell4.innerHTML = "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 1)'>Copy FILE NAME</button>" +
-                      "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 2)'>Copy URL</button>" +
-                      "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
-                      "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
+    cell4.innerHTML = "<button class='copy-button' onclick='copyFileName(this.parentNode.parentNode)'>Copy FILE NAME</button>" +
+                        "<button class='copy-button' onclick='copyFileUrl(this.parentNode.parentNode)'>Copy URL</button>" +
+                        "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
+                         "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
   }
 
   function editRow(row) {
@@ -161,8 +174,8 @@ window.onload = function() {
     var actionsCell = cells[4];
     actionsCell.innerHTML = "";
     actionsCell.appendChild(editButton);
-    actionsCell.innerHTML += "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 1)'>Copy FILE NAME</button>" +
-                            "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 2)'>Copy URL</button>" +
+    actionsCell.innerHTML += "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, 3)'>Copy FILE NAME</button>" +
+                            "<button class='copy-button' onclick='copyLine(this.parentNode.parentNode, )'>Copy URL</button>" +
                             "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
 
     document.getElementById("filename").value = ""; // Clear Filename input
