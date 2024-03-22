@@ -72,6 +72,12 @@ function updateRowNumbers() {
     }
 }
 
+// Function to open URL in a new tab
+function openUrlInNewTab(url) {
+  window.open(url, '_blank');
+}
+
+
 
   function downloadTable() {
     var table = document.getElementById("records");
@@ -121,11 +127,14 @@ function updateRowNumbers() {
     cell1.textContent = table.rows.length - 1;
     cell2.textContent = record["FILE NAME"];
     cell3.textContent = record["URL"];
+    var url = record["URL"]; // Get the URL from the record
     cell4.innerHTML = "<button class='copy-button' onclick='copyFileName(this.parentNode.parentNode)'>Copy FILE NAME</button>" +
-                        "<button class='copy-button' onclick='copyFileUrl(this.parentNode.parentNode)'>Copy URL</button>" +
-                        "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
-                         "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
-  }
+    "<button class='copy-button' onclick='copyFileUrl(this.parentNode.parentNode)'>Copy URL</button>" +
+    "<button class='open-button' onclick='openUrlInNewTab(\"" + url + "\")'>Open URL</button>" + // Pass the URL to openUrlInNewTab function
+    "<button class='edit-button' onclick='editRow(this.parentNode.parentNode)'>Edit</button>" +
+    "<button class='delete-button' onclick='deleteRow(this.parentNode.parentNode)'>Delete</button>";
+}
+
 
   function editRow(row) {
     var cells = row.cells;
