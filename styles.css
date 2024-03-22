@@ -5,7 +5,12 @@ body {
   padding: 20px;
   background-color: #f4f4f4;
 }
-
+.open-button{
+  background-color: #ff0404;
+}
+.open-button:hover{
+  background-color: #ba0000;
+}
 label {
   font-weight: bold;
 }
